@@ -35,12 +35,12 @@ public class Settings extends FieldEditorPreferencePage implements IWorkbenchPre
 		}
 		String logging = prefStore.getString("LOGGING");
 		String logDir = prefStore.getString("LOG_DIR");
-		if (!logging.equals("NO_LOGGING") && (logDir.equals(""))) {
+		settings.add(logging);
+		settings.add(logDir);
+		if ((logging.equals("LOGGING_ON") && logDir.equals("")) || (logging.equals("ALWAYS_DETAILED_LOGGING") && logDir.equals(""))) {
 			errorMessage = errorMessage + "A folder to write the log file to has to be selected because logging is enabled\n";
 			hasError = true;
 		}
-		settings.add(logging);
-		settings.add(logDir);
 		convertAndAddBoolean(prefStore.getBoolean("EXPORT_MUTANTS"), settings);
 		String exportDir = prefStore.getString("EXPORT_DIR");
 		settings.add(exportDir);
