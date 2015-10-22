@@ -1,0 +1,1 @@
+These files can be used to import the source code of JaMu directly into Eclipse.
