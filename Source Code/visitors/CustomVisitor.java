@@ -13,22 +13,18 @@ public abstract class CustomVisitor extends ASTVisitor {
 	protected CompilationUnit cu;
 	//Used on disk to keep track of mutations made
 	protected String visitorType;
-	//Legacy code
+	//Used in the UI to indicate mutators
 	protected String visitorLabel;
-	//Used in the UI where users pick the desired mutation rules
-	protected String visitorCategory;
-	
 	
 	protected CustomVisitor(CompilationUnit cu){
-		this(cu,"NotSet","NotSet");
+		this(cu,"NotSet");
 	}
 	
-	protected CustomVisitor(CompilationUnit cu, String visitorLabel, String visitorCategory){
+	protected CustomVisitor(CompilationUnit cu, String visitorLabel){
 		matches = new ArrayList<Triple>();
 		this.cu = cu;
 		setVisitorType("NotSet");
 		setVisitorLabel(visitorLabel);
-		setVisitorCategory(visitorCategory);
 	}
 	
 	protected String generateNewCode(String source, Triple occurence, int counter){
@@ -102,13 +98,6 @@ public abstract class CustomVisitor extends ASTVisitor {
 	}
 	public void setVisitorType(String visitorType) {
 		this.visitorType = visitorType;
-	}
-	
-	public String getVisitorCategory() {
-		return visitorCategory;
-	}
-	public void setVisitorCategory(String visitorCategory){
-		this.visitorCategory = visitorCategory;
 	}
 	
 	public int getNumberOfMatches(){

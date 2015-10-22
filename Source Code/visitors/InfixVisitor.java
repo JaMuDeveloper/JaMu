@@ -1,7 +1,5 @@
 package visitors;
 
-import java.util.List;
-
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
@@ -12,22 +10,20 @@ public class InfixVisitor extends CustomVisitor{
 	private String symbolToFind;
 	private String symbolToReplace;
 	
-	public InfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String label, String category) {
+	public InfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String label) {
 		super(cu);
 		setVisitorType(type);
 		symbolToFind = fsymbol;
 		symbolToReplace = rsymbol;
 		setVisitorLabel(label);
-		setVisitorCategory(category);
 	}
 
-	public InfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String category) {
+	public InfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol) {
 		super(cu);
 		setVisitorType(type);
 		symbolToFind = fsymbol;
 		symbolToReplace = rsymbol;
 		setVisitorLabel(fsymbol + " to " + rsymbol);
-		setVisitorCategory(category);
 	}
 	
 	public void endVisit(InfixExpression node){
@@ -42,18 +38,10 @@ public class InfixVisitor extends CustomVisitor{
 			if (mi.getExpression() instanceof StringLiteral){
 				return;
 			}
-		} else if (node.hasExtendedOperands()){
-			List<?> operatorlist =  node.extendedOperands();
-			for (Object e : operatorlist){
-				if (e instanceof StringLiteral){
-					return;
-				}
-			}
 		} else if (!(node.getLeftOperand() instanceof StringLiteral) && !(node.getRightOperand() instanceof StringLiteral)
 				&& node.getOperator().toString().equals(symbolToFind)){
 			handleMatch(node);
 		}
-		
 	}
 	
 	private void handleMatch(InfixExpression node){

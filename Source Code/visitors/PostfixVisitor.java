@@ -8,22 +8,20 @@ public class PostfixVisitor extends CustomVisitor{
 	private String symbolToFind;
 	private String symbolToReplace;
 	
-	public PostfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String label, String category) {
+	public PostfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String label) {
 		super(cu);
 		setVisitorType(type);
 		symbolToFind = fsymbol;
 		symbolToReplace = rsymbol;
 		setVisitorLabel(label);
-		setVisitorCategory(category);
 	}
 
-	public PostfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol, String category) {
+	public PostfixVisitor(CompilationUnit cu, String type, String fsymbol, String rsymbol) {
 		super(cu);
 		setVisitorType(type);
 		symbolToFind = fsymbol;
 		symbolToReplace = rsymbol;
 		setVisitorLabel(fsymbol + " to " + rsymbol);
-		setVisitorCategory(category);
 	}
 	
 	public void endVisit(PostfixExpression node){

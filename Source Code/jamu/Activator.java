@@ -1,9 +1,5 @@
 package jamu;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -51,26 +47,4 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public static Shell getActiveWorkbenchShell() {
- 		IWorkbenchWindow workBenchWindow= getActiveWorkbenchWindow();
- 		if (workBenchWindow == null)
- 			return null;
- 		return workBenchWindow.getShell();
- 	}
-	
-
- 	public static IWorkbenchWindow getActiveWorkbenchWindow() {
- 		if (plugin == null)
- 			return null;
- 		IWorkbench workBench= plugin.getWorkbench();
- 		if (workBench == null)
- 			return null;
- 			return workBench.getActiveWorkbenchWindow();
- 	}
- 	
- 	public IWorkbench getWorkbench() {
- 	    return PlatformUI.getWorkbench();
- 	}
-
-	
 }

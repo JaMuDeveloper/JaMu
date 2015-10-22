@@ -7,20 +7,18 @@ public class IfVisitor extends CustomVisitor {
 
 	private String newSymbol;
 	
-	public IfVisitor(CompilationUnit cu, String type, String newSymbol, String label, String category) {
+	public IfVisitor(CompilationUnit cu, String type, String newSymbol, String label) {
 		super(cu);
 		setVisitorType(type);
 		this.newSymbol = newSymbol;
 		setVisitorLabel(label);
-		setVisitorCategory(category);
 	}
 	
-	public IfVisitor(CompilationUnit cu, String type, String newSymbol, String category) {
+	public IfVisitor(CompilationUnit cu, String type, String newSymbol) {
 		super(cu);
 		setVisitorType(type);
 		this.newSymbol = newSymbol;
 		setVisitorLabel("if(x) to if(" + newSymbol + ")");
-		setVisitorCategory(category);
 	}	
 
 	public void endVisit(IfStatement node){

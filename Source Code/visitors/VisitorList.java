@@ -32,28 +32,28 @@ public class VisitorList {
 	private CustomVisitor[] visitors;
 	
 	public VisitorList(CompilationUnit cu){
-		additionVisitor = new InfixVisitor(cu, "Addition","+","-","AORB");
-		subtractionVisitor = new InfixVisitor(cu, "Subtraction","-","+","AORB");
-		divisionVisitor = new InfixVisitor(cu, "Division","/","*","AORB");
-		multiplicationVisitor = new InfixVisitor(cu, "Multiplication","*","/","AORB");
-		remainderVisitor = new InfixVisitor(cu, "Remainder", "%","*", "% to *","AORB");
-		plusPlusVisitor = new PostfixVisitor(cu, "PlusPlus", "++", "--","AORS");
-		minusMinusVisitor = new PostfixVisitor(cu, "MinusMinus","--","++","AORS");
-		greaterThanReversedVisitor = new InfixVisitor(cu, "GreaterThanReversed", ">", "<=","ROR");
-		greaterThanBoundaryVisitor = new InfixVisitor(cu, "GreaterThanBoundary", ">", ">=","ROR");
-		greaterOrEqualReversedVisitor = new InfixVisitor(cu, "GreaterOrEqualReversed", ">=", "<","ROR");
-		greaterOrEqualBoundaryVisitor = new InfixVisitor(cu, "GreaterOrEqualBoundary", ">=", ">","ROR");
-		lessThanReversedVisitor = new InfixVisitor(cu, "LessThanReversed", "<", ">=","ROR");
-		lessThanBoundaryVisitor = new InfixVisitor(cu, "LessThanBoundary", "<", "<=","ROR");
-		lessOrEqualReversed = new InfixVisitor(cu, "LessOrEqualReversed", "<=", ">","ROR");
-		lessOrEqualBoundary = new InfixVisitor(cu, "LessOrEqualBoundary", "<=", "<","ROR");
-		equalsVisitor = new InfixVisitor(cu, "Equal", "==", "!=","ROR");
-		notEqualsVisitor = new InfixVisitor(cu, "NotEqual", "!=", "==","ROR");
-		andVisitor = new InfixVisitor(cu, "And", "&&", "||","COR");
-		orVisitor = new InfixVisitor(cu, "Or", "||", "&&","COR");
-		notVisitor = new PrefixVisitor(cu, "Not", "!","","!x to x","COR");
-		ifToTrueVisitor = new IfVisitor(cu,"IfToTrue","true","BOR");
-		ifToFalseVisitor = new IfVisitor(cu,"IfToFalse","false","BOR");
+		additionVisitor = new InfixVisitor(cu, "Addition","+","-");
+		subtractionVisitor = new InfixVisitor(cu, "Subtraction","-","+");
+		divisionVisitor = new InfixVisitor(cu, "Division","/","*");
+		multiplicationVisitor = new InfixVisitor(cu, "Multiplication","*","/");
+		remainderVisitor = new InfixVisitor(cu, "Remainder", "%","*", "% to *");
+		greaterThanReversedVisitor = new InfixVisitor(cu, "GreaterThanReversed", ">", "<=");
+		greaterThanBoundaryVisitor = new InfixVisitor(cu, "GreaterThanBoundary", ">", ">=");
+		greaterOrEqualReversedVisitor = new InfixVisitor(cu, "GreaterOrEqualReversed", ">=", "<");
+		greaterOrEqualBoundaryVisitor = new InfixVisitor(cu, "GreaterOrEqualBoundary", ">=", ">");
+		lessThanReversedVisitor = new InfixVisitor(cu, "LessThanReversed", "<", ">=");
+		lessThanBoundaryVisitor = new InfixVisitor(cu, "LessThanBoundary", "<", "<=");
+		lessOrEqualReversed = new InfixVisitor(cu, "LessOrEqualReversed", "<=", ">");
+		lessOrEqualBoundary = new InfixVisitor(cu, "LessOrEqualBoundary", "<=", "<");
+		equalsVisitor = new InfixVisitor(cu, "Equal", "==", "!=");
+		notEqualsVisitor = new InfixVisitor(cu, "NotEqual", "!=", "==");
+		andVisitor = new InfixVisitor(cu, "And", "&&", "||");
+		orVisitor = new InfixVisitor(cu, "Or", "||", "&&");
+		plusPlusVisitor = new PostfixVisitor(cu, "PlusPlus", "++", "--");
+		minusMinusVisitor = new PostfixVisitor(cu, "MinusMinus","--","++");
+		notVisitor = new PrefixVisitor(cu, "Not", "!","","!x to x");
+		ifToTrueVisitor = new IfVisitor(cu,"IfToTrue","true");
+		ifToFalseVisitor = new IfVisitor(cu,"IfToFalse","false");
 		
 		CustomVisitor[] temp = {additionVisitor,subtractionVisitor,divisionVisitor,multiplicationVisitor,remainderVisitor,
 				greaterThanReversedVisitor,greaterThanBoundaryVisitor,greaterOrEqualReversedVisitor,greaterOrEqualBoundaryVisitor,
@@ -129,46 +129,11 @@ public class VisitorList {
 	
 	public static List<String> getLabels(){
 		VisitorList DO_NOT_USE = new VisitorList(null);
-		List<String> labels = new ArrayList<String>();
+		List<String> labelList = new ArrayList<String>();
 		for (CustomVisitor v : DO_NOT_USE.getVisitors()){
-			labels.add(v.getVisitorLabel());
+			labelList.add(v.getVisitorLabel());
 		}
-		return labels;
+		return labelList;
 	}
 	
-	public static List<String> getCategories(){
-		VisitorList DO_NOT_USE = new VisitorList(null);
-		List<String> categories = new ArrayList<String>();
-		for (CustomVisitor v : DO_NOT_USE.getVisitors()){
-			String cat = v.getVisitorCategory();
-			if (!categories.contains(cat)){
-				categories.add(cat);
-			}
-		}
-		return categories;
-	}
-	
-	public static List<String> transformToLabels(List<String> mutationRules) {
-		VisitorList DO_NOT_USE = new VisitorList(null);
-		List<String> labels = new ArrayList<String>();
-		for (String mutationRule : mutationRules){
-			for (CustomVisitor v : DO_NOT_USE.getVisitors()){
-				if (v.getVisitorCategory().equals(mutationRule)){
-					labels.add(v.getVisitorLabel());
-				}
-			}
-		}
-		return labels;
-	}
-
-	public static String getCategoryForLabel(String mutatorLabel) {
-		VisitorList DO_NOT_USE = new VisitorList(null);
-		for (CustomVisitor v : DO_NOT_USE.getVisitors()){
-			if (v.getVisitorLabel().equals(mutatorLabel)){
-				return v.getVisitorCategory();
-			}
-		}
-		return "UNCATEGORIZED";
-	}
-		
 }

@@ -9,22 +9,10 @@ public class Logger {
 	private PrintWriter writer;
 	private String logFilePath;
 	private boolean loggingEnabled;
-	private boolean logEverything;
 
-	public Logger(String logFilePath, String typeOfLogging) {
+	public Logger(String logFilePath, boolean loggingEnabled) {
 		this.logFilePath = logFilePath;
-		if (typeOfLogging.equals("NO_LOGGING")){
-			loggingEnabled = false;
-			logEverything = false;
-		}
-		else if (typeOfLogging.equals("LOGGING_ON")){
-			loggingEnabled = true;
-			logEverything = false;
-		}
-		else{
-			loggingEnabled = true;
-			logEverything = true;
-		}
+		this.loggingEnabled = loggingEnabled;
 		emptyLog();
 	}
 
@@ -35,7 +23,7 @@ public class Logger {
 	}
 
 	public void emptyLog() {
-		if (loggingEnabled) {
+		if (this.loggingEnabled) {
 			try {
 				writer = new PrintWriter(new File(this.logFilePath));
 			} catch (FileNotFoundException localFileNotFoundException) {
@@ -46,10 +34,6 @@ public class Logger {
 
 	public boolean isEnabled() {
 		return loggingEnabled;
-	}
-	
-	public boolean logEverything(){
-		return logEverything;
 	}
 
 	public void doneLogging() {

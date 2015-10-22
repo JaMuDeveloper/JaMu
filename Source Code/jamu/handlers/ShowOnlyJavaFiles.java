@@ -5,22 +5,26 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 public class ShowOnlyJavaFiles extends ViewerFilter {
 	
-   private String projectName;
+   IJavaProject chosenProject;
    
-   ShowOnlyJavaFiles(String projectName){
-	   this.projectName = projectName;
+   ShowOnlyJavaFiles(Object o){
+	   if (!(o instanceof IJavaProject)){
+		   System.out.println("This filter should not be instanciated when the parameter passed is not an IJavaProject");
+	   }
+	   chosenProject = (IJavaProject) o;
    }
 
   @Override
   public boolean select(Viewer viewer, Object parentElement, Object element) {
 	if (element instanceof IProject){
 		IProject pj = (IProject) element;
-		if (projectName.equals(pj.getName())){
+		if (chosenProject.getElementName().equals(pj.getName())){
 			return true;
 		}
 	}
